@@ -3,7 +3,9 @@
     "outDir": "./dist",
     "target": "es6",
     "watch": true,
-    "allowJs": true
+    "allowJs": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true
   },
   "include": ["./src/**/*"]
 }
