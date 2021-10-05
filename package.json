@@ -1,0 +1,28 @@
+{
+  "name": "learn-ts",
+  "version": "1.0.0",
+  "description": "学习ts笔记，ts，typeScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RainyNight9/learn-ts.git"
+  },
+  "author": "rain9",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RainyNight9/learn-ts/issues"
+  },
+  "homepage": "https://github.com/RainyNight9/learn-ts#readme",
+  "devDependencies": {
+    "@types/node": "^16.10.1"
+  },
+  "dependencies": {
+    "@types/jquery": "^3.5.6",
+    "@types/moment": "^2.13.0",
+    "jquery": "^3.6.0",
+    "moment": "^2.29.1"
+  }
+}

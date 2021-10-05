@@ -361,6 +361,11 @@ let colors = {
 };
 
 type tColors = typeof colors;
+// 等同于
+// type tColors = {
+//   color1: "string",
+//   color2: "string",
+// }
 
 let color3: tColors;
 ```
@@ -375,10 +380,152 @@ interface Person {
   age: number;
 }
 
-type a = keyof Person; // type a = 'string' | 'number'
+type a = keyof Person; // 等同于 type a = 'name' | 'age'
 
 let data: a;
 data = "name";
 data = "age";
 data = "gender"; // 报错
+```
+
+```ts
+function css(ele: Element, attr: keyof CSSStyleDeclaration) {
+  return getComputedStyle(ele)[attr];
+}
+
+let box = document.querySelector(".box");
+box && css(box, "width");
+box && css(box, "aaa"); // 报错
+```
+
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+let p1: Person = {
+  name: "zhangsan",
+  age: 30,
+};
+function getPersonVal(k: keyof Person) {
+  return p1[k];
+}
+
+let p2 = {
+  name: "zhangsan",
+  age: 30,
+  gender: "Man",
+};
+function getPersonVal2(k: keyof typeof p2) {
+  return p2[k];
+}
+```
+
+#### in
+
+>操作符对值和类型都可以使用
+
+针对值进行操作，用来判断值中是否包含指定的key
+
+```ts
+let a = "name" in { name: "zhangsan", age: 30 }; // true
+let b = "gender" in { name: "zhangsan", age: 30 }; // false
+```
+
+针对类型进行操作的话，内部使用for...in对类型进行遍历
+
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+type personKeys = keyof Person;
+type newPerson = {
+  [k in personKeys]: string;
+};
+```
+
+>注意：in后边的类型值必须是 string 或 number 或 symbol
+
+#### extends
+
+>类型继承操作符
+
+```ts
+interface type1 {
+  x: number;
+  y: number;
+}
+
+interface type2 extends type1 {
+  z: string;
+}
+
+let a: type2 = {
+  x: 1,
+  y: 2,
+  z: "3",
+};
+```
+
+或者是这样：
+
+```ts
+type type1 = {
+  x: number;
+  y: number;
+};
+function fn<T extends type1>(args: T) {}
+fn({ x: 1, y: 2 });
+```
+
+### 类型保护
+
+#### typeof保护
+
+```ts
+function toUpperCase(str: string | string[]) {
+  // str.length;
+  // return str.toUpperCase(); // 报错
+
+  if (typeof str === "string") {
+    str.toUpperCase();
+  } else {
+    str.push();
+  }
+}
+```
+
+#### instanceof保护
+
+```ts
+function toUpperCase(str: string | string[]) {
+  // str.length;
+  // return str.toUpperCase(); // 报错
+
+  if (str instanceof Array) {
+    str.push();
+  } else {
+    str.toUpperCase();
+  }
+}
+```
+
+#### 自定义类型保护
+
+```ts
+// data is Element[] | NodeList 是一种类型谓词，格式为： xx is type
+function canEach(
+  data: Element[] | NodeList | Element
+): data is Element[] | NodeList {
+  return (<NodeList>data).forEach !== undefined;
+}
+
+function fn2(elements: Element[] | NodeList | Element) {
+  if (canEach(elements)) {
+    elements.forEach(() => {});
+  } else {
+    elements.classList.add("box");
+  }
+}
 ```
