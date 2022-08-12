@@ -1,5 +1,7 @@
 # learn ts
 
+相关代码辅助学习地址：[github](https://github.com/RainyNight9/learn-ts.git)
+
 ## 1、搭建环境
 
 1、node安装
